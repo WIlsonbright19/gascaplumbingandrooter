@@ -2,7 +2,11 @@ import { motion } from 'motion/react';
 
 function StarRow() {
   return (
-    <div className="flex items-center gap-1 text-[#D9480F] mb-4" aria-label="5 out of 5 stars">
+    <div
+      role="img"
+      aria-label="Rated five out of five stars"
+      className="flex items-center gap-1 text-[#D9480F] mb-4"
+    >
       {[...Array(5)].map((_, i) => (
         <svg
           key={i}
@@ -18,13 +22,26 @@ function StarRow() {
 }
 
 export function Reviews() {
-  const quoteWords = ['[REVIEW', 'TEXT]'];
+  const reviews = [
+    {
+      quote: 'If I could give six stars I would.',
+      name: 'Marcus Pun',
+    },
+    {
+      quote: 'Gasca Plumbing is where it is at!',
+      name: 'Isaac Wiedmann',
+    },
+    {
+      quote: 'Fixed the disposal and dish washer issue at a great price.',
+      name: 'Freedom in Motion',
+    },
+  ];
 
   return (
     <section id="reviews" className="py-20 md:py-28 max-w-[1280px] mx-auto px-4 sm:px-6 md:px-8">
       <div className="mb-12">
         <span className="font-sans text-[14px] font-medium uppercase tracking-[0.08em] text-[#5B7378] mb-2 block">
-          Client Feedback
+          Google reviews · 5.0 from 13 reviews
         </span>
         <h2 className="font-heading font-semibold text-[clamp(36px,5vw,72px)] leading-[1.08] tracking-[-0.02em] text-[#12303A]">
           Straight from neighbors.
@@ -36,86 +53,49 @@ export function Reviews() {
         <div className="lg:col-span-7 bg-[#FFFBF4] border border-[#DCD3C0] rounded-[24px] p-6 sm:p-8 md:p-12">
           <StarRow />
           <blockquote className="font-heading font-semibold text-2xl sm:text-3xl md:text-[40px] leading-[1.2] text-[#12303A] mb-8 break-words">
-            <span className="inline-flex flex-wrap gap-x-2">
-              &ldquo;
-              {quoteWords.map((word, idx) => (
-                <motion.span
-                  key={idx}
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{
-                    duration: 0.5,
-                    delay: idx * 0.06,
-                    ease: [0.16, 1, 0.3, 1],
-                  }}
-                  className="inline-block"
-                >
-                  {word}
-                </motion.span>
-              ))}
-              &rdquo;
-            </span>
+            &ldquo;{reviews[0].quote}&rdquo;
           </blockquote>
 
           <div className="border-t border-[#DCD3C0] pt-6 flex items-center justify-between">
             <div>
               <p className="font-sans font-bold text-[17px] text-[#12303A]">
-                [FIRST NAME]
+                {reviews[0].name}
               </p>
               <p className="font-sans text-[15px] text-[#5B7378]">
-                [NEIGHBORHOOD]
+                Google review
               </p>
             </div>
             <span className="font-sans text-xs uppercase tracking-[0.08em] font-medium text-[#0F5C6E]">
-              Verified Client
+              5-star review
             </span>
           </div>
         </div>
 
         {/* Right: Two Smaller Quote Cards Stacked */}
         <div className="lg:col-span-5 space-y-6">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="bg-[#FFFBF4] border border-[#DCD3C0] rounded-[24px] p-6 sm:p-8"
-          >
-            <StarRow />
-            <p className="font-sans text-[17px] text-[#12303A] leading-[1.65] mb-4">
-              &ldquo;[REVIEW TEXT]&rdquo;
-            </p>
-            <div className="border-t border-[#DCD3C0] pt-4">
-              <p className="font-sans font-bold text-[15px] text-[#12303A]">
-                [FIRST NAME]
-              </p>
-              <p className="font-sans text-sm text-[#5B7378]">
-                [NEIGHBORHOOD]
-              </p>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.5, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-            className="bg-[#FFFBF4] border border-[#DCD3C0] rounded-[24px] p-6 sm:p-8"
-          >
-            <StarRow />
-            <p className="font-sans text-[17px] text-[#12303A] leading-[1.65] mb-4">
-              &ldquo;[REVIEW TEXT]&rdquo;
-            </p>
-            <div className="border-t border-[#DCD3C0] pt-4">
-              <p className="font-sans font-bold text-[15px] text-[#12303A]">
-                [FIRST NAME]
-              </p>
-              <p className="font-sans text-sm text-[#5B7378]">
-                [NEIGHBORHOOD]
-              </p>
-            </div>
-          </motion.div>
+          {reviews.slice(1).map((review, index) => (
+            <motion.article
+              key={review.name}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.5, delay: index * 0.15, ease: [0.16, 1, 0.3, 1] }}
+              className="bg-[#FFFBF4] border border-[#DCD3C0] rounded-[24px] p-6 sm:p-8"
+            >
+              <StarRow />
+              <blockquote className="font-sans text-[17px] text-[#12303A] leading-[1.65] mb-4">
+                &ldquo;{review.quote}&rdquo;
+              </blockquote>
+              <div className="border-t border-[#DCD3C0] pt-4">
+                <p className="font-sans font-bold text-[15px] text-[#12303A]">
+                  {review.name}
+                </p>
+                <p className="font-sans text-sm text-[#5B7378]">
+                  Google review
+                </p>
+              </div>
+            </motion.article>
+          ))}
 
           {/* Link-style Read more reviews on Google */}
           <div className="pt-2 text-left">
